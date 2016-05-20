@@ -1,24 +1,32 @@
-var tvn24stop=1;
-var player=null;
 
 function __inject()
 {
+    var ____play = {};
+    
     function checkVideos()
     {
+        var keys=Object.keys(vjs.players);
+        for (i=0; i<keys.length; i++)
+        {
+            if (____play[keys[i]])
+            {
+                continue;
+            };
+            if (vjs.players[keys[i]].pause)
+            {
+                vjs.players[keys[i]].pause();
+            };
+        };
+        
         $('.videoPlayer').each(function () {
             var elem = $(this).parent();
             var parent = elem.parent();
+            
             if (parent.find('.tvn24videos_button').length!=0)
             {
                 return;
             };
             
-            // disable annoying autoplay
-            elem.find('video').each(function() {
-                    var e=$(this);
-                    e.attr('autoplay', false);
-            });
-
             // insert buttons
             var div = $("<div/>");
             elem.after(div);
@@ -35,6 +43,8 @@ function __inject()
                 var player = vjs.players[id];
                 if (!player) return;
                 
+                ____play[id]=true;
+                       
                 player.play();
             });          
             
@@ -63,31 +73,20 @@ function __inject()
         });
     };
     
-    function tvn24videos () {
-        var players=vjs.players;
-        var keys=Object.keys(players);    
-    
-        for(var k=0, l=keys.length; k<l; k++) {
-            var player = players[keys[k]]; 
-            
-            if (player.hasStarted() && player.ads.endLinearAdMode) {
-                var temp = player.ads.endLinearAdMode;
-                player.ads.endLinearAdMode();
-                // don't know why this method is wiped out after use - restore it
-                player.ads.endLinearAdMode = temp;
-                // player.play();
-            };
-        };
-    };
-    
     checkVideos();
     
+    var keys=Object.keys(vjs.players);
+    for (i=0; i<keys.length; i++)
+    {
+        if (vjs.players[keys[i]].pause)
+        {
+            vjs.players[keys[i]].pause();
+        };
+    };
     setInterval(checkVideos, 1000);    
 };
 
 function tvn24videosInit() {
-    console.log("tvn24-STOP init");
-    
     var script = document.createElement('script');
     script.textContent = '(' + __inject + ')();';
     (document.head||document.documentElement).appendChild(script);

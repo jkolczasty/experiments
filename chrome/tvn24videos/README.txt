@@ -18,3 +18,7 @@ you need to install it manually (probably will not be published in Google Play s
 P.S. I know ads makes money, that why many news portals are for free,
 but too many ads is just annoying and makes people to do tools
 like this or AdBlock or Ghostery.
+
+NOTE:
+
+It still needs some improvements. This code was created as PoC.

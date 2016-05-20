@@ -1,0 +1,11 @@
+{
+  "manifest_version": 2,
+  "version": "1.0",
+  "name": "tvn24.pl stop annoying video autplay and add skip ad button - TVN just stop playing so many ads! Event replay same video starts with AD! Enough!",
+  "content_scripts": [
+    {
+      "matches": ["http://www.tvn24.pl/*", "http://*.tvn24.pl/*"],
+      "js": ["tvn24stop.js"]
+    }
+  ]
+}
